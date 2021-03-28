@@ -131,6 +131,7 @@
 /bundles/org.openhab.binding.kvv/ @ne0h
 /bundles/org.openhab.binding.lametrictime/ @syphr42
 /bundles/org.openhab.binding.lcn/ @fwolter
+/bundles/org.openhab.binding.leadenergy/ @SMHRambo
 /bundles/org.openhab.binding.leapmotion/ @kaikreuzer
 /bundles/org.openhab.binding.lghombot/ @FluBBaOfWard
 /bundles/org.openhab.binding.lgtvserial/ @fa2k
