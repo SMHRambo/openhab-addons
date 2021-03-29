@@ -27,8 +27,22 @@ public class LEADenergyBindingConstants {
     private static final String BINDING_ID = "leadenergy";
 
     // List of all Thing Type UIDs
-    public static final ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
+    public static final ThingTypeUID THING_TYPE_SW = new ThingTypeUID(BINDING_ID, "SW");
+    public static final ThingTypeUID THING_TYPE_PDW = new ThingTypeUID(BINDING_ID, "PDW");
+    public static final ThingTypeUID THING_TYPE_PDC = new ThingTypeUID(BINDING_ID, "PDC");
+
+    // List of thing Parameters names
+    public static final String PARAMETER_HOST = "host";
+    public static final String PARAMETER_PORT = "port";
+    public static final String PARAMETER_POLLINGPERIOD = "pollingPeriod";
 
     // List of all Channel ids
-    public static final String CHANNEL_1 = "channel1";
+    public static final String CHANNEL_POWER = "power";
+    public static final String CHANNEL_BRIGHTNESS = "brightness";
+    public static final String CHANNEL_COLOR_TEMPERATURE = "color-temperature";
+    public static final String CHANNEL_COLOR = "color";
+    public static final String CHANNEL_WHITE = "white";
+
+    public static final Integer DEFAULTPORT = 8899;
+    public static final Integer DEFAULTPOLLINGPERIOD = 30;
 }

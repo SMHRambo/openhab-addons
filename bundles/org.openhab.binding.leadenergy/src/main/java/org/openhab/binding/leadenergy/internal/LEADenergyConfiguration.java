@@ -19,8 +19,31 @@ package org.openhab.binding.leadenergy.internal;
  */
 public class LEADenergyConfiguration {
 
-    /**
-     * Sample configuration parameter. Replace with your own.
-     */
-    public String config1;
+    private String host;
+    private Integer port;
+    private Integer pollingPeriod;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public Integer getPollingPeriod() {
+        return pollingPeriod;
+    }
+
+    public void setPollingPeriod(Integer pollingPeriod) {
+        this.pollingPeriod = pollingPeriod;
+    }
 }

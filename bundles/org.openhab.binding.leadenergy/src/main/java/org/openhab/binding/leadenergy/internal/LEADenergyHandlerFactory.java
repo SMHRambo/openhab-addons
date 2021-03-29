@@ -14,7 +14,10 @@ package org.openhab.binding.leadenergy.internal;
 
 import static org.openhab.binding.leadenergy.internal.LEADenergyBindingConstants.*;
 
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,7 +38,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(configurationPid = "binding.leadenergy", service = ThingHandlerFactory.class)
 public class LEADenergyHandlerFactory extends BaseThingHandlerFactory {
 
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Set.of(THING_TYPE_SAMPLE);
+    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections
+            .unmodifiableSet(Stream.of(THING_TYPE_SW, THING_TYPE_PDW, THING_TYPE_PDC).collect(Collectors.toSet()));
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
@@ -46,8 +50,12 @@ public class LEADenergyHandlerFactory extends BaseThingHandlerFactory {
     protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (THING_TYPE_SAMPLE.equals(thingTypeUID)) {
-            return new LEADenergyHandler(thing);
+        if (thingTypeUID.equals(THING_TYPE_SW)) {
+            return new LEADenergySWHandler(thing);
+        } else if (thingTypeUID.equals(THING_TYPE_PDW)) {
+            return new LEADenergyPDWHandler(thing);
+        } else if (thingTypeUID.equals(THING_TYPE_PDC)) {
+            return new LEADenergyPDCHandler(thing);
         }
 
         return null;

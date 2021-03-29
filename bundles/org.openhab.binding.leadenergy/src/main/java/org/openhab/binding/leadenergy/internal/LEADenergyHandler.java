@@ -14,11 +14,21 @@ package org.openhab.binding.leadenergy.internal;
 
 import static org.openhab.binding.leadenergy.internal.LEADenergyBindingConstants.*;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 import org.eclipse.jdt.annotation.Nullable;
+import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
+import org.openhab.core.thing.ThingStatusDetail;
 import org.openhab.core.thing.binding.BaseThingHandler;
 import org.openhab.core.types.Command;
 import org.openhab.core.types.RefreshType;
@@ -31,10 +41,18 @@ import org.slf4j.LoggerFactory;
  *
  * @author Sascha Marcel Hacker - Initial contribution
  */
-@NonNullByDefault
 public class LEADenergyHandler extends BaseThingHandler {
 
+    private String host;
+    private int port;
+
+    private byte[] magic = { (byte) 0x55, (byte) 0x00, (byte) 0x00, (byte) 0x00 };
+    private byte[] unknown = { (byte) 0x02, (byte) 0xff };
+    private byte[] end = { (byte) 0xaa, (byte) 0xaa };
+    private byte[] powerCommand = { (byte) 0x02, (byte) 0x12 };
+
     private final Logger logger = LoggerFactory.getLogger(LEADenergyHandler.class);
+    private ScheduledFuture<?> pollingJob;
 
     private @Nullable LEADenergyConfiguration config;
 
@@ -42,59 +60,100 @@ public class LEADenergyHandler extends BaseThingHandler {
         super(thing);
     }
 
+    private byte calcChecksum(List<byte[]> payload) {
+        byte checksum = 0x00;
+        for (byte[] a : payload) {
+            for (byte b : a) {
+                checksum += b;
+            }
+        }
+        checksum &= 0xff;
+        return checksum;
+    }
+
+    protected void sendData(List<byte[]> payload) throws UnknownHostException, IOException {
+        List<byte[]> message = new ArrayList<byte[]>();
+        message.add(magic);
+        message.addAll(payload);
+        message.add(new byte[] { calcChecksum(payload) });
+        message.add(end);
+
+        Socket server = new Socket(host, port);
+        OutputStream out = server.getOutputStream();
+
+        for (byte[] a : message) {
+            out.write(a);
+        }
+
+        server.close();
+    }
+
+    protected void setPowerstate(boolean state) throws UnknownHostException, IOException {
+        List<byte[]> payload = new ArrayList<byte[]>();
+        payload.add(unknown);
+        payload.add(powerCommand);
+        payload.add(new byte[] { (state) ? (byte) 0xab : (byte) 0xa9 });
+        sendData(payload);
+    }
+
+    private void handlePowerCommand(Command command) throws IOException {
+        if (command instanceof OnOffType) {
+            setPowerstate(command == OnOffType.ON);
+        }
+    }
+
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
-        if (CHANNEL_1.equals(channelUID.getId())) {
-            if (command instanceof RefreshType) {
-                // TODO: handle data refresh
+        logger.debug("Handle command '{}' for {}", command, channelUID);
+
+        try {
+            if (command == RefreshType.REFRESH) {
+                update();
+            } else if (channelUID.getId().equals(LEADenergyBindingConstants.CHANNEL_POWER)) {
+                handlePowerCommand(command);
             }
-
-            // TODO: handle command
-
-            // Note: if communication with thing fails for some reason,
-            // indicate that by setting the status with detail information:
-            // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
-            // "Could not control device at IP address x.x.x.x");
+        } catch (IOException e) {
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.OFFLINE.COMMUNICATION_ERROR, e.getMessage());
         }
     }
 
     @Override
     public void initialize() {
+        logger.debug("Initializing LEADenergy handler '{}'", getThing().getUID());
+
         config = getConfigAs(LEADenergyConfiguration.class);
 
-        // TODO: Initialize the handler.
-        // The framework requires you to return from this method quickly. Also, before leaving this method a thing
-        // status from one of ONLINE, OFFLINE or UNKNOWN must be set. This might already be the real thing status in
-        // case you can decide it directly.
-        // In case you can not decide the thing status directly (e.g. for long running connection handshake using WAN
-        // access or similar) you should set status UNKNOWN here and then decide the real status asynchronously in the
-        // background.
+        this.host = config.getHost();
+        this.port = (config.getPort() == null) ? LEADenergyBindingConstants.DEFAULTPORT : config.getPort();
 
-        // set the thing status to UNKNOWN temporarily and let the background task decide for the real status.
-        // the framework is then able to reuse the resources from the thing handler initialization.
-        // we set this upfront to reliably check status updates in unit tests.
-        updateStatus(ThingStatus.UNKNOWN);
+        update();
 
-        // Example for background initialization:
-        scheduler.execute(() -> {
-            boolean thingReachable = true; // <background task with long running initialization here>
-            // when done do:
-            if (thingReachable) {
-                updateStatus(ThingStatus.ONLINE);
-            } else {
-                updateStatus(ThingStatus.OFFLINE);
-            }
-        });
+        int pollingPeriod = (config.getPollingPeriod() == null) ? LEADenergyBindingConstants.DEFAULTPOLLINGPERIOD
+                : config.getPollingPeriod();
+        if (pollingPeriod > 0) {
+            pollingJob = scheduler.scheduleWithFixedDelay(() -> update(), 0, pollingPeriod, TimeUnit.SECONDS);
+            logger.debug("Polling job scheduled to run every {} sec. for '{}'", pollingPeriod, getThing().getUID());
+        }
+    }
 
-        // These logging types should be primarily used by bindings
-        // logger.trace("Example trace message");
-        // logger.debug("Example debug message");
-        // logger.warn("Example warn message");
+    @Override
+    public void dispose() {
+        logger.debug("Disposing LEADenergy handler '{}'", getThing().getUID());
 
-        // Note: When initialization can NOT be done set the status with more details for further
-        // analysis. See also class ThingStatusDetail for all available status details.
-        // Add a description to give user information to understand why thing does not work as expected. E.g.
-        // updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
-        // "Can not access device as username and/or password are invalid");
+        if (pollingJob != null) {
+            pollingJob.cancel(true);
+            pollingJob = null;
+        }
+    }
+
+    protected void update() {
+        try {
+            Socket server = new Socket(this.host, this.port);
+            server.close();
+        } catch (IOException e) {
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.OFFLINE.CONFIGURATION_ERROR, e.getMessage());
+            return;
+        }
+        updateStatus(ThingStatus.ONLINE);
     }
 }
