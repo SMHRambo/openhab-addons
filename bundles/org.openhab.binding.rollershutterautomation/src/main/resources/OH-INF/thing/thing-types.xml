@@ -4,29 +4,61 @@
 	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<label>RollershutterAutomation Binding Thing</label>
-		<description>Sample thing for RollershutterAutomation Binding</description>
+	<bridge-type id="controller">
+		<label>Controller</label>
+		<description>TODO</description>
 
 		<channels>
-			<channel id="channel1" typeId="sample-channel"/>
+			<channel typeId="azimuth" id="azimuth"/>
+			<channel typeId="elevation" id="elevation"/>
+		</channels>
+
+	</bridge-type>
+
+	<thing-type id="rollershutter">
+		<label>Rollershutter</label>
+		<description>TODO</description>
+
+		<channels>
+			<channel typeId="rollershutter" id="rollershutter"/>
+			<channel typeId="window" id="window"/>
 		</channels>
 
 		<config-description>
-			<parameter name="config1" type="text" required="true">
-				<label>Sample Parameter</label>
-				<description>This is a sample text configuration parameter</description>
+			<parameter name="left" type="integer" required="false" min="0" max="359">
+				<label>Left</label>
+				<description>Left angle of the window.</description>
+			</parameter>
+			<parameter name="right" type="integer" required="false" min="0" max="359">
+				<label>Right</label>
+				<description>Right angle of the window.</description>
 			</parameter>
 		</config-description>
 
 	</thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>rollershutterautomationItem</item-type>
-		<label>RollershutterAutomation Binding Channel</label>
-		<description>Sample channel for RollershutterAutomation Binding</description>
+	<channel-type id="azimuth">
+		<item-type>Number:Angle</item-type>
+		<label>Azimuth</label>
+		<description>Azimuth information</description>
+	</channel-type>
+
+	<channel-type id="elevation">
+		<item-type>Number:Angle</item-type>
+		<label>Elevation</label>
+		<description>Elevation information</description>
+	</channel-type>
+
+	<channel-type id="rollershutter">
+		<item-type>Rollershutter</item-type>
+		<label>Rollershutter</label>
+		<description>Rollershutter to control</description>
+	</channel-type>
+
+	<channel-type id="window">
+		<item-type>Contact</item-type>
+		<label>Window</label>
+		<description>Window information</description>
 	</channel-type>
 
 </thing:thing-descriptions>
