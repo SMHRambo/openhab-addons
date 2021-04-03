@@ -14,7 +14,10 @@ package org.openhab.binding.rollershutterautomation.internal;
 
 import static org.openhab.binding.rollershutterautomation.internal.RollershutterAutomationBindingConstants.*;
 
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -35,7 +38,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(configurationPid = "binding.rollershutterautomation", service = ThingHandlerFactory.class)
 public class RollershutterAutomationHandlerFactory extends BaseThingHandlerFactory {
 
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Set.of(THING_TYPE_SAMPLE);
+    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections
+            .unmodifiableSet(Stream.of(THING_TYPE_CONTROLLER, THING_TYPE_ROLLERSHUTTER).collect(Collectors.toSet()));
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
@@ -46,7 +50,9 @@ public class RollershutterAutomationHandlerFactory extends BaseThingHandlerFacto
     protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (THING_TYPE_SAMPLE.equals(thingTypeUID)) {
+        if (THING_TYPE_CONTROLLER.equals(thingTypeUID)) {
+            return new RollershutterAutomationHandler(thing);
+        } else if (THING_TYPE_ROLLERSHUTTER.equals(thingTypeUID)) {
             return new RollershutterAutomationHandler(thing);
         }
 

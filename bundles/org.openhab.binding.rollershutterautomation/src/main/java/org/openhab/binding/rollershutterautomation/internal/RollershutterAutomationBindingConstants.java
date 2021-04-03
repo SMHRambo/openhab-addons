@@ -27,8 +27,18 @@ public class RollershutterAutomationBindingConstants {
     private static final String BINDING_ID = "rollershutterautomation";
 
     // List of all Thing Type UIDs
-    public static final ThingTypeUID THING_TYPE_SAMPLE = new ThingTypeUID(BINDING_ID, "sample");
+    public static final ThingTypeUID THING_TYPE_CONTROLLER = new ThingTypeUID(BINDING_ID, "controller");
+    public static final ThingTypeUID THING_TYPE_ROLLERSHUTTER = new ThingTypeUID(BINDING_ID, "rollershutter");
 
-    // List of all Channel ids
-    public static final String CHANNEL_1 = "channel1";
+    // List of actor Channel ids
+    public static final String CHANNEL_ROLLERSHUTTER = "rollershutter";
+
+    // List of sensor Channel ids
+    public static final String CHANNEL_AZIMUTH = "azimuth";
+    public static final String CHANNEL_ELEVATION = "elevation";
+    public static final String CHANNEL_WINDOW = "window";
+
+    // Thing configuration properties
+    public static final String LEFT_CONFIG = "left";
+    public static final String RIGHT_CONFIG = "right";
 }
