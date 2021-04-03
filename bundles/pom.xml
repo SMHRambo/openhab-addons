@@ -376,6 +376,7 @@
     <module>org.openhab.binding.robonect</module>
     <module>org.openhab.binding.roborock</module>
     <module>org.openhab.binding.roku</module>
+    <module>org.openhab.binding.rollershutterautomation</module>
     <module>org.openhab.binding.rotel</module>
     <module>org.openhab.binding.russound</module>
     <module>org.openhab.binding.sagercaster</module>
