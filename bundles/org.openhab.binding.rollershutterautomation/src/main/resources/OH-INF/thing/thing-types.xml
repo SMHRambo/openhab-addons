@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="rollershutterautomation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<bridge-type id="controller">
+		<label>Controller</label>
+		<description>TODO</description>
+
+	</bridge-type>
+	<thing-type id="room">
+		<label>Room</label>
+		<description>TODO</description>
+		<channels>
+			<channel typeId="Temperature" id="roomtemperature">
+				<label>Roomtemperature</label>
+				<description>description</description>
+			</channel>
+		</channels>
+		<config-description>
+			<parameter name="" type="text"></parameter>
+		</config-description>
+	</thing-type>
+	<thing-type id="group">
+		<label>Group</label>
+	</thing-type>
+
+	<thing-type id="rollershutter">
+		<label>Rollershutter</label>
+		<description>TODO</description>
+
+		<channels>
+			<channel typeId="rollershutter" id="rollershutter"/>
+			<channel typeId="window" id="window"/>
+		</channels>
+
+		<config-description>
+			<parameter-group name="mainsettings">
+				<label>Mainsettings</label>
+				<description>Main settings.</description>
+			</parameter-group>
+
+			<parameter-group name="sunprotection">
+				<label>Sunprotection</label>
+				<description>sunprotection settings.</description>
+			</parameter-group>
+
+			<parameter-group name="rainprotection">
+				<label>Rainprotection</label>
+				<description>Rainprotection settings.</description>
+			</parameter-group>
+
+			<parameter name="rollershutterclosing" type="text" required="false" groupName="mainsettings">
+				<default>"Off"</default>
+				<description>description</description>
+				<label>rollershutterclosing</label>
+				<options>
+					<option value="off">Off</option>
+					<option value="livingroom">Livingroom</option>
+					<option value="bedroom">Bedroom</option>
+					<option value="sunrisesunset">Sunrise/Sunset</option>
+					<option value="elevation">Elevation</option>
+					<option value="goldenhour">Golden Hour</option>
+				</options>
+				<required>false</required>
+			</parameter>
+
+			<parameter name="rollershutteropening" type="text" required="false" groupName="mainsettings">
+				<default>"Off"</default>
+				<description>description</description>
+				<label>rollershutteropening</label>
+				<options>
+					<option value="off">Off</option>
+					<option value="livingroom">Livingroom</option>
+					<option value="bedroom">Bedroom</option>
+					<option value="sunrisesunset">Sunrise/Sunset</option>
+					<option value="elevation">Elevation</option>
+					<option value="goldenhour">Golden Hour</option>
+				</options>
+				<required>false</required>
+			</parameter>
+
+			<parameter name="lockoutprotection" type="boolean" required="false" groupName="mainstettings">
+				<default>false</default>
+				<description>description</description>
+				<label>lockoutprotection</label>
+
+				<required>false</required>
+			</parameter>
+
+			<parameter name="sunprotectionmode" type="text" required="false" groupName="sunprotection">
+				<label>Sun protection mode</label>
+				<default>"Off"</default>
+				<description></description>
+				<options>
+					<option value="off">Off</option>
+					<option value="direction">Direction</option>
+				</options>
+				<required>false</required>
+			</parameter>
+
+			<parameter name="Sun protection height" type="integer" step="1" min="0" max="100" required="false" unit="%"
+				groupName="sunprotection">
+				<required>false</required>
+				<description>description</description>
+				<label>Sun protection height</label>
+				<default>50</default>
+			</parameter>
+
+			<parameter name="left" type="integer" required="false" min="0" max="359">
+				<label>Left</label>
+				<description>Left angle of the window.</description>
+			</parameter>
+
+			<parameter name="right" type="integer" required="false" min="0" max="359">
+				<label>Right</label>
+				<description>Right angle of the window.</description>
+			</parameter>
+
+			<parameter name="outsidetemperature" type="integer" required="false" groupName="" step="1" unit="%">
+				<label>Outside temperature</label>
+				<description></description>
+				<required>false</required>
+			</parameter>
+
+			<parameter name="indoortemperature" type="integer" required="false">
+				<label>Indoor temperature</label>
+				<description></description>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<channel-type id="rollershutter">
+		<item-type>Rollershutter</item-type>
+		<label>Rollershutter</label>
+		<description>Rollershutter to control</description>
+	</channel-type>
+
+	<channel-type id="window">
+		<item-type>Contact</item-type>
+		<label>Window</label>
+		<description>Window information</description>
+	</channel-type>
+	<channel-type id="outsidetemperature">
+		<item-type>Number:Temperature</item-type>
+		<label>Outside Temperature</label>
+	</channel-type>
+	<channel-type id="indoortemperature">
+		<item-type>Number:Temperature</item-type>
+		<label>Indoor Temperature</label>
+	</channel-type>
+
+</thing:thing-descriptions>
