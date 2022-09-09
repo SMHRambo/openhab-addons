@@ -236,6 +236,7 @@
     <module>org.openhab.binding.kvv</module>
     <module>org.openhab.binding.lametrictime</module>
     <module>org.openhab.binding.lcn</module>
+    <module>org.openhab.binding.leadenergy</module>
     <module>org.openhab.binding.leapmotion</module>
     <module>org.openhab.binding.lghombot</module>
     <module>org.openhab.binding.lgtvserial</module>
