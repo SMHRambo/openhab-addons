@@ -8,12 +8,21 @@
 		<label>Controller</label>
 		<description>TODO</description>
 
-		<channels>
-			<channel typeId="azimuth" id="azimuth"/>
-			<channel typeId="elevation" id="elevation"/>
-		</channels>
-
 	</bridge-type>
+	<thing-type id="room">
+		<label>Room</label>
+		<description>TODO</description>
+		<channels>
+			<channel typeId="Temperature" id="roomtemperature">
+				<label>Roomtemperature</label>
+				<description>description</description></channel>
+		</channels>
+		<config-description>
+			<parameter name="" type="text"></parameter></config-description>
+	</thing-type>
+	<thing-type id="group">
+		<label>Group</label>
+	</thing-type>
 
 	<thing-type id="rollershutter">
 		<label>Rollershutter</label>
@@ -25,6 +34,44 @@
 		</channels>
 
 		<config-description>
+			<parameter-group name="mainstettings"></parameter-group>
+			<parameter name="rollershutterclosing" type="text" required="false" groupName="mainsettings">
+				<default>"Off"</default>
+				<description>description</description>
+				<label>rollershutterclosing</label>
+				<options>"Off", "Livingroom", "Bedroom", "Sunrise/Sunset", "Elevation", "Golden Hour"</options>
+				<required>false</required>
+			</parameter>
+			<parameter name="rollershutteropening" type="text" required="false" groupName="mainsettings">
+				<default>"Off"</default>
+				<description>description</description>
+				<label>rollershutteropening</label>
+				<options>"Off", "Livingroom", "Bedroom", "Sunrise/Sunset", "Elevation", "Golden Hour"</options>
+				<required>false</required>
+			</parameter>
+			<parameter name="lockoutprotection" type="boolean" required="false" groupName="mainstettings">
+				<default>false</default>
+				<description>description</description>
+				<label>lockoutprotection</label>
+
+				<required>false</required>
+			</parameter>
+			<parameter-group name="sunprotection"></parameter-group>
+			<parameter name="sunprotectionmode" type="text" required="false" groupName="sunprotection">
+				<label>Sun protection mode</label>
+				<default>"Off"</default>
+				<description></description>
+
+				<options>"Off", "Indoor- + Oudsidetemperature/Lightsensor", Direction"</options>
+				<required>false</required>
+			</parameter>
+			<parameter name="Sun protection height" type="integer" step="1" min="0" max="100" required="false" unit="%"
+				groupName="sunprotection">
+				<required>false</required>
+				<description>description</description>
+				<label>Sun protection height</label>
+				<default>50</default>
+			</parameter>
 			<parameter name="left" type="integer" required="false" min="0" max="359">
 				<label>Left</label>
 				<description>Left angle of the window.</description>
@@ -33,21 +80,27 @@
 				<label>Right</label>
 				<description>Right angle of the window.</description>
 			</parameter>
+			<parameter name="outsidetemperature" type="integer" required="false" groupName="" step="1" unit="%">
+				<label>Outside temperature</label>
+				<description></description>
+				<required>false</required>
+			</parameter>
+			<parameter name="indoortemperature" type="integer" required="false">
+				<label>Indoor temperature</label>
+				<description></description>
+			</parameter>
+			<parameter-group name="rainprotection"></parameter-group>
+
+
+
+
+
+
+
+
 		</config-description>
 
 	</thing-type>
-
-	<channel-type id="azimuth">
-		<item-type>Number:Angle</item-type>
-		<label>Azimuth</label>
-		<description>Azimuth information</description>
-	</channel-type>
-
-	<channel-type id="elevation">
-		<item-type>Number:Angle</item-type>
-		<label>Elevation</label>
-		<description>Elevation information</description>
-	</channel-type>
 
 	<channel-type id="rollershutter">
 		<item-type>Rollershutter</item-type>
@@ -59,6 +112,14 @@
 		<item-type>Contact</item-type>
 		<label>Window</label>
 		<description>Window information</description>
+	</channel-type>
+	<channel-type id="outsidetemperature">
+		<item-type>Number:Temperature</item-type>
+		<label>Outside Temperature</label>
+	</channel-type>
+	<channel-type id="indoortemperature">
+		<item-type>Number:Temperature</item-type>
+		<label>Indoor Temperature</label>
 	</channel-type>
 
 </thing:thing-descriptions>
