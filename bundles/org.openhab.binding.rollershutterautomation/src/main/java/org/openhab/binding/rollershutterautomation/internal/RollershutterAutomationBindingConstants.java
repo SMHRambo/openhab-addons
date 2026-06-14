@@ -34,15 +34,7 @@ public class RollershutterAutomationBindingConstants {
     // List of actor Channel ids
     public static final String CHANNEL_ROLLERSHUTTER = "rollershutter";
 
-    // List of sensor Channel ids
-    public static final String CHANNEL_AZIMUTH = "azimuth";
-    public static final String CHANNEL_ELEVATION = "elevation";
-    public static final String CHANNEL_WINDOW = "window";
-
-    // Thing configuration properties
-    public static final String LEFT_CONFIG = "left";
-    public static final String RIGHT_CONFIG = "right";
-
+    // List of all Thing ids
     private static final String CONTROLLER = "controller";
     public static final String ROLLERSHUTTER = "rollershutter";
 
@@ -54,26 +46,10 @@ public class RollershutterAutomationBindingConstants {
     public static final String EVENT_START = "START";
     public static final String EVENT_END = "END";
 
-    public static final String EVENT_PERIGEE = "PERIGEE";
-    public static final String EVENT_APOGEE = "APOGEE";
+    public static final String EVENT_OPEN = "OPEN";
+    public static final String EVENT_CLOSE = "CLOSE";
 
-    // event channelIds
-    public static final String EVENT_CHANNEL_ID_PERIGEE = "perigee#event";
-    public static final String EVENT_CHANNEL_ID_APOGEE = "apogee#event";
-
-    public static final String EVENT_CHANNEL_ID_RISE = "rise#event";
-    public static final String EVENT_CHANNEL_ID_SET = "set#event";
-    public static final String EVENT_CHANNEL_ID_NOON = "noon#event";
-    public static final String EVENT_CHANNEL_ID_NIGHT = "night#event";
-    public static final String EVENT_CHANNEL_ID_MORNING_NIGHT = "morningNight#event";
-    public static final String EVENT_CHANNEL_ID_ASTRO_DAWN = "astroDawn#event";
-    public static final String EVENT_CHANNEL_ID_NAUTIC_DAWN = "nauticDawn#event";
-    public static final String EVENT_CHANNEL_ID_CIVIL_DAWN = "civilDawn#event";
-    public static final String EVENT_CHANNEL_ID_ASTRO_DUSK = "astroDusk#event";
-    public static final String EVENT_CHANNEL_ID_NAUTIC_DUSK = "nauticDusk#event";
-    public static final String EVENT_CHANNEL_ID_CIVIL_DUSK = "civilDusk#event";
-    public static final String EVENT_CHANNEL_ID_EVENING_NIGHT = "eveningNight#event";
-    public static final String EVENT_CHANNEL_ID_DAYLIGHT = "daylight#event";
-
-    public static final String CHANNEL_ID_SUN_PHASE_NAME = "phase#name";
+    public static final String EVENT_OPENED = "OPENED";
+    public static final String EVENT_CLOSED = "CLOSED";
+    public static final String EVENT_TILTED = "TILTED";
 }

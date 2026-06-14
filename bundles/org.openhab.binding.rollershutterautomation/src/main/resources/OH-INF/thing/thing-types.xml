@@ -7,129 +7,174 @@
 	<bridge-type id="controller">
 		<label>Controller</label>
 		<description>TODO</description>
-
 	</bridge-type>
-	<thing-type id="room">
-		<label>Room</label>
-		<description>TODO</description>
-		<channels>
-			<channel typeId="Temperature" id="roomtemperature">
-				<label>Roomtemperature</label>
-				<description>description</description>
-			</channel>
-		</channels>
-		<config-description>
-			<parameter name="" type="text"></parameter>
-		</config-description>
-	</thing-type>
-	<thing-type id="group">
-		<label>Group</label>
-	</thing-type>
 
 	<thing-type id="rollershutter">
 		<label>Rollershutter</label>
 		<description>TODO</description>
-
 		<channels>
 			<channel typeId="rollershutter" id="rollershutter"/>
-			<channel typeId="window" id="window"/>
+			<channel typeId="sunprotection" id="sunprotection"></channel>
+			<channel typeId="rainprotection" id="rainprotection"></channel>
+			<channel typeId="openedsensor" id="openedsensor"></channel>
+			<channel typeId="tiltedsensor" id="tiltedsensor"></channel>
+			<channel typeId="closedsensor" id="closedsensor"></channel>
 		</channels>
 
 		<config-description>
+
 			<parameter-group name="mainsettings">
-				<label>Mainsettings</label>
-				<description>Main settings.</description>
+				<label>Main settings</label>
+				<description>Main settings</description>
 			</parameter-group>
+            <parameter-group name="windowsdoorsettings">
+                <label>Windows/Door settings</label>
+                <description>Window/Door settings</description>
+            </parameter-group>
+            <parameter-group name="sunprotectionsettings">
+                <label>Sun protection settings</label>
+                <description>Sun protection settings</description>
+            </parameter-group>
+            <parameter-group name="rainprotectionsettings">
+                <label>Rain protection settings</label>
+                <description>Rain protection settings.</description>
+            </parameter-group>
 
-			<parameter-group name="sunprotection">
-				<label>Sunprotection</label>
-				<description>sunprotection settings.</description>
-			</parameter-group>
+            <parameter name="openingMode" type="text" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+              <default>off</default>
+              <label>Opening mode</label>
+              <description>Type of control for opening the shutter</description>
+              <options>
+                <option value="off">Off</option>
+                <option value="livingarea">Living area</option>
+                <option value="sleepingarea">Sleeping area</option>
+                <option value="childrenarea">Children area</option>
+                <option value="sunset">Sunset</option>
+                <option value="sunrise">Sunrise</option>
+                <option value="sunelevationabove">Sun elevation (Sunrise)</option>
+                <option value="sunelevationbelow">Sun elevation (Sunset)</option>
+                <option value="timeeveryday">Time everyday</option>
+                <option value="timeworkdayweekend">Time workday/weekend</option>
+                <option value="timeindividual">Time individual</option>
+              </options>
+            </parameter>
+            <parameter name="closingMode" type="text" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+              <default>Off</default>
+              <label>Closing mode</label>
+              <description>Type of control for closing the shutter</description>
+              <options>
+                <option value="off">Off</option>
+                <option value="livingarea">Living area</option>
+                <option value="sleepingarea">Sleeping area</option>
+                <option value="childrenarea">Children area</option>
+                <option value="sunset">Sunset</option>
+                <option value="sunrise">Sunrise</option>
+                <option value="sunelevationabove">Sun elevation (Sunrise)</option>
+                <option value="sunelevationbelow">Sun elevation (Sunset)</option>
+                <option value="timeeveryday">Time everyday</option>
+                <option value="timeworkdayweekend">Time workday/weekend</option>
+                <option value="timeindividual">Time individual</option>
+              </options>
+            </parameter>
+            <parameter name="openingHeight" type="integer" min="0" max="100" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+            	<default>0</default>
+            	<label>Opening height</label>
+            	<description>Roller shutter height when opening</description>
+            </parameter>
+            <parameter name="closingHeight" type="integer" min="0" max="100" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+              <default>100</default>
+              <label>Closing height</label>
+              <description>Roller shutter height when closing</description>
+            </parameter>
+            <parameter name="openingElevation" type="integer" min="-90" max="90" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+              <default>4</default>
+              <label>Sun elevation for opening</label>
+              <description>Sun elevation for opening mode</description>
+            </parameter>
+            <parameter name="closingElevation" type="integer" min="-90" max="90" required="false" readOnly="false" multiple="false" groupName="mainsettings">
+              <default>4</default>
+              <label>Sun elevation for closing</label>
+              <description>Sun elevation for closing mode</description>
+            </parameter>
 
-			<parameter-group name="rainprotection">
-				<label>Rainprotection</label>
-				<description>Rainprotection settings.</description>
-			</parameter-group>
+            <parameter name="windowsdoorMode" type="text" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <default>off</default>
+              <label>Window/Door mode</label>
+              <description>Behavior when window/door is opened/closed</description>
+              <options>
+                <option value="off">Off</option>
+                <option value="opening">Opening</option>
+                <option value="closing">Closing</option>
+                <option value="openingclosing">Opening and closing</option>
+              </options>
+            </parameter>
+            <parameter name="lockoutprotection" type="text" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <default>off</default>
+              <label>lock-out protection</label>
+              <description>Behavior when window/door is opened/closed</description>
+              <options>
+                <option value="off">Off</option>
+                <option value="opening">Opening</option>
+                <option value="closing">Closing</option>
+                <option value="openingclosing">Opening and closing</option>
+              </options>
+            </parameter>
+            <parameter name="openedHeight" type="integer" min="0" max="100" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <default>100</default>
+              <label>Opened height</label>
+              <description>Roller shutter height when windows/door is opened</description>
+            </parameter>
+            <parameter name="tiltedHeight" type="integer" min="0" max="100" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <default>100</default>
+              <label>Tilted height</label>
+              <description>Roller shutter height the window/door is tilted</description>
+            </parameter>
+            <parameter name="sensorValueOpened" type="text" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <label>Sensor value opened</label>
+              <description>Value of the window/door sensor when it is opened</description>
+            </parameter>
+            <parameter name="sensorValueTilted" type="text" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <label>Sensor value tilted</label>
+              <description>Value of the window/door sensor when it is tilted</description>
+            </parameter>
+            <parameter name="sensorValueClosed" type="text" required="false" readOnly="false" multiple="false" groupName="windowsdoorsettings">
+              <label>Sensor value closed</label>
+              <description>Value of the window/door sensor when it is closed</description>
+            </parameter>
 
-			<parameter name="rollershutterclosing" type="text" required="false" groupName="mainsettings">
-				<default>"Off"</default>
-				<description>description</description>
-				<label>rollershutterclosing</label>
-				<options>
-					<option value="off">Off</option>
-					<option value="livingroom">Livingroom</option>
-					<option value="bedroom">Bedroom</option>
-					<option value="sunrisesunset">Sunrise/Sunset</option>
-					<option value="elevation">Elevation</option>
-					<option value="goldenhour">Golden Hour</option>
-				</options>
-				<required>false</required>
+		    <parameter name="sunprotectionMode" type="text" required="false" readOnly="false" multiple="false" groupName="sunprotectionsettings">
+		      <default>off</default>
+		      <label>Sun Protection Mode</label>
+		      <description>String</description>
+		      <options>
+		        <option value="off">Off</option>
+		        <option value="direction">Direction</option>
+		        <option value="external">External</option>
+		        <option value="directionexternal">Direction and external</option>
+		      </options>
+		    </parameter>
+            <parameter name="sunAzimuthAngleLeft" type="integer" min="0" max="359" required="false" readOnly="false" multiple="false" groupName="sunprotectionsettings">
+                <label>Sun Azimuth Angle Left</label>
+                <default>180</default>
+                <description>Sun azimuth angle threshold in degrees (0-359)</description>
+            </parameter>
+            <parameter name="sunAzimuthAngleRight" type="integer" min="0" max="359" required="false" readOnly="false" multiple="false" groupName="sunprotectionsettings">
+                <label>Sun Azimuth Angle Right</label>
+                <default>180</default>
+                <description>Sun azimuth angle threshold in degrees (0-359)</description>
+            </parameter>
+			<parameter name="sunHeight" type="integer" min="0" max="100" required="false" readOnly="false" multiple="false" groupName="sunprotectionsettings">
+				<label></label>
+				<default>180</default>
+				<description>Roller shutter height when window/door is tilted and it is raining</description>
 			</parameter>
 
-			<parameter name="rollershutteropening" type="text" required="false" groupName="mainsettings">
-				<default>"Off"</default>
-				<description>description</description>
-				<label>rollershutteropening</label>
-				<options>
-					<option value="off">Off</option>
-					<option value="livingroom">Livingroom</option>
-					<option value="bedroom">Bedroom</option>
-					<option value="sunrisesunset">Sunrise/Sunset</option>
-					<option value="elevation">Elevation</option>
-					<option value="goldenhour">Golden Hour</option>
-				</options>
-				<required>false</required>
-			</parameter>
-
-			<parameter name="lockoutprotection" type="boolean" required="false" groupName="mainstettings">
+			<parameter name="rainprotectionMode" type="text" required="false" groupName="rainprotectionsettings">
+				<label>Rain Protection Enabled</label>
 				<default>false</default>
-				<description>description</description>
-				<label>lockoutprotection</label>
-
-				<required>false</required>
-			</parameter>
-
-			<parameter name="sunprotectionmode" type="text" required="false" groupName="sunprotection">
-				<label>Sun protection mode</label>
-				<default>"Off"</default>
-				<description></description>
-				<options>
-					<option value="off">Off</option>
-					<option value="direction">Direction</option>
-				</options>
-				<required>false</required>
-			</parameter>
-
-			<parameter name="Sun protection height" type="integer" step="1" min="0" max="100" required="false" unit="%"
-				groupName="sunprotection">
-				<required>false</required>
-				<description>description</description>
-				<label>Sun protection height</label>
-				<default>50</default>
-			</parameter>
-
-			<parameter name="left" type="integer" required="false" min="0" max="359">
-				<label>Left</label>
-				<description>Left angle of the window.</description>
-			</parameter>
-
-			<parameter name="right" type="integer" required="false" min="0" max="359">
-				<label>Right</label>
-				<description>Right angle of the window.</description>
-			</parameter>
-
-			<parameter name="outsidetemperature" type="integer" required="false" groupName="" step="1" unit="%">
-				<label>Outside temperature</label>
-				<description></description>
-				<required>false</required>
-			</parameter>
-
-			<parameter name="indoortemperature" type="integer" required="false">
-				<label>Indoor temperature</label>
-				<description></description>
+				<description>Enable/disable rain protection mode</description>
 			</parameter>
 		</config-description>
-
 	</thing-type>
 
 	<channel-type id="rollershutter">
@@ -137,19 +182,25 @@
 		<label>Rollershutter</label>
 		<description>Rollershutter to control</description>
 	</channel-type>
-
-	<channel-type id="window">
-		<item-type>Contact</item-type>
-		<label>Window</label>
-		<description>Window information</description>
+	<channel-type id="sunprotection">
+		<item-type>Switch</item-type>
+		<label>Sun protection trigger</label>
 	</channel-type>
-	<channel-type id="outsidetemperature">
-		<item-type>Number:Temperature</item-type>
-		<label>Outside Temperature</label>
+	<channel-type id="rainprotection">
+		<item-type>Switch</item-type>
+		<label>Rain protection trigger</label>
 	</channel-type>
-	<channel-type id="indoortemperature">
-		<item-type>Number:Temperature</item-type>
-		<label>Indoor Temperature</label>
+	<channel-type id="openedsensor">
+		<item-type>String</item-type>
+		<label>Sensor for opend windows/door</label>
 	</channel-type>
+	<channel-type id="tiltedsensor">
+		<item-type>String</item-type>
+		<label>Sensor for tilted windows/door</label>
+	</channel-type>
+    <channel-type id="closedsensor">
+        <item-type>String</item-type>
+        <label>Sensor for closed windows/door</label>
+    </channel-type>
 
 </thing:thing-descriptions>

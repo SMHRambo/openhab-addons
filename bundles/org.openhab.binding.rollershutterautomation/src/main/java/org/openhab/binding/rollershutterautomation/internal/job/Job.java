@@ -12,9 +12,6 @@
  */
 package org.openhab.binding.rollershutterautomation.internal.job;
 
-import static org.openhab.binding.rollershutterautomation.internal.RollershutterAutomationBindingConstants.*;
-import static org.openhab.binding.rollershutterautomation.internal.util.DateTimeUtils.*;
-
 import java.lang.invoke.MethodHandles;
 import java.util.Calendar;
 

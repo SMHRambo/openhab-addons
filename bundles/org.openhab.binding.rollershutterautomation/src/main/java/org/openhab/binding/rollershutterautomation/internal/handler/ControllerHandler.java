@@ -12,7 +12,8 @@
  */
 package org.openhab.binding.rollershutterautomation.internal.handler;
 
-import static org.openhab.core.thing.ThingStatus.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.core.thing.ChannelUID;
@@ -27,6 +28,8 @@ import org.openhab.core.types.Command;
  */
 @NonNullByDefault
 public class ControllerHandler extends RollershutterAutomationThingHandler {
+
+    private List<RollershutterHandler> rollershutters = new ArrayList<>();
 
     /**
      * Constructor

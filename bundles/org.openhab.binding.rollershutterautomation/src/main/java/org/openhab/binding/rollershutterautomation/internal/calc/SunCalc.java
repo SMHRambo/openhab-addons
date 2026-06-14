@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Map.Entry;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.rollershutterautomation.internal.model.Position;
 import org.openhab.binding.rollershutterautomation.internal.model.Radiation;
 import org.openhab.binding.rollershutterautomation.internal.model.Range;
@@ -90,7 +91,7 @@ public class SunCalc {
     /**
      * Calculates sun radiation data.
      */
-    private void setRadiationInfo(Calendar calendar, double elevation, Double altitude, Sun sun) {
+    private void setRadiationInfo(Calendar calendar, double elevation, @Nullable Double altitude, Sun sun) {
         double sinAlpha = Math.sin(DEG2RAD * elevation);
 
         int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR);

@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sascha Marcel Hacker - Initial contribution
  */
 @NonNullByDefault
-@Component(configurationPid = "binding.rollershutterautomation", service = ThingHandlerFactory.class)
+@Component(service = ThingHandlerFactory.class, configurationPid = "binding.rollershutterautomation")
 public class RollershutterAutomationHandlerFactory extends BaseThingHandlerFactory {
 
     private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES = Set.of(THING_TYPE_CONTROLLER,
@@ -60,7 +60,8 @@ public class RollershutterAutomationHandlerFactory extends BaseThingHandlerFacto
             return super.createThing(thingTypeUID, configuration, thingUID, bridgeUID);
         }
 
-        return null;
+        throw new IllegalArgumentException(
+                "The thing type " + thingTypeUID + " is not supported by the RollershutterAutomation binding.");
     }
 
     @Override
