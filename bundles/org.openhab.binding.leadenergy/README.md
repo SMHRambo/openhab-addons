@@ -34,34 +34,41 @@ The only thing that needed is the hostname or ip.
 
 The syntax for a thing is:
 
-    LEADenergy:devicetype:NAME
+```bash
+LEADenergy:devicetype:NAME
+```
 
 LEADenergy.things:
 
-    Thing LEADenergy:SW:celling      [ host="192.168.178.130", port=8899, pollingPeriod=30 ]
-    Thing LEADenergy:PDW:kitchen     [ host="192.168.178.131", port=8899, pollingPeriod=30 ]
-    Thing LEADenergy:PDC:lifingroom  [ host="192.168.178.132", port=8899, pollingPeriod=30 ]
+```bash
+Thing LEADenergy:SW:celling      [ host="192.168.178.130", port=8899, pollingPeriod=30 ]
+Thing LEADenergy:PDW:kitchen     [ host="192.168.178.131", port=8899, pollingPeriod=30 ]
+Thing LEADenergy:PDC:lifingroom  [ host="192.168.178.132", port=8899, pollingPeriod=30 ]
+```
 
 Parameters:
 
-    host: hostname or ip of the device (required)
-    port: tcp control port of the device (default: 8899, optional)
-    pollingPeriod: time for polling the device status (default: 30, optional)
-
+```bash
+host: hostname or ip of the device (required)
+port: tcp control port of the device (default: 8899, optional)
+pollingPeriod: time for polling the device status (default: 30, optional)
+```
 
 LEADenergy.items:
 
-    Switch LEDPanelCelling_power            "Power"             (Light) {channel="LEADenergy:SW:celling:power"}
-    Dimmer LEDPanelCelling_brightness       "Brightness"        (Light) {channel="LEADenergy:SW:celling:brightness"}
+```bash
+Switch LEDPanelCelling_power            "Power"             (Light) {channel="LEADenergy:SW:celling:power"}
+Dimmer LEDPanelCelling_brightness       "Brightness"        (Light) {channel="LEADenergy:SW:celling:brightness"}
     
-    Switch LEDPanelKitchen_power            "Power"             (Light) {channel="LEADenergy:PDW:kitchen:power"}
-    Dimmer LEDPanelKitchen_brightness       "Brightness"        (Light) {channel="LEADenergy:PDW:kitchen:brightness"}
-    Dimmer LEDPanelKitchen_colortemperature "Color Temperature" (Light) {channel="LEADenergy:PDW:kitchen:color-temperature"}
+Switch LEDPanelKitchen_power            "Power"             (Light) {channel="LEADenergy:PDW:kitchen:power"}
+Dimmer LEDPanelKitchen_brightness       "Brightness"        (Light) {channel="LEADenergy:PDW:kitchen:brightness"}
+Dimmer LEDPanelKitchen_colortemperature "Color Temperature" (Light) {channel="LEADenergy:PDW:kitchen:color-temperature"}
     
-    Switch LEDPanelLifingroom_power         "Power"             (Light) {channel="LEADenergy:PDC:lifingroom:power"}
-    Dimmer LEDPanelLifingroom_brightness    "Brightness"        (Light) {channel="LEADenergy:PDC:lifingroom:brightness"}
-    Color  LEDPanelLifingroom_color         "Color"             (Light) {channel="LEADenergy:PDC:lifingroom:color"}
-    Switch LEDPanelKitchen_white            "White"             (Light) {channel="LEADenergy:PDC:lifingroom:white"}
+Switch LEDPanelLifingroom_power         "Power"             (Light) {channel="LEADenergy:PDC:lifingroom:power"}
+Dimmer LEDPanelLifingroom_brightness    "Brightness"        (Light) {channel="LEADenergy:PDC:lifingroom:brightness"}
+ Color  LEDPanelLifingroom_color         "Color"             (Light) {channel="LEADenergy:PDC:lifingroom:color"}
+Switch LEDPanelKitchen_white            "White"             (Light) {channel="LEADenergy:PDC:lifingroom:white"}
+```
 
 ## Any custom content here!
 
